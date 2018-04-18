@@ -1,0 +1,19 @@
+class Node:
+    def __init__(self, pv, nxt, data):
+        self.pv = pv
+        self.nxt = nxt
+        self.data = data
+        
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        
+    def insert(x, data):
+        # insert a node with data behind position x
+        
+    def delete(x):
+        # delete the node at position x
+        
+    def find(x):
+        # return the data of the node at position x

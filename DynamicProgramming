@@ -1,0 +1,109 @@
+#1dmaxsum
+thing = [5,-7,2,-1,4,-6,99999]
+
+def onedmaxsum(thing):
+  cursum = 0
+  maxsum = 0
+  for i in range(len(thing)):
+    cursum = max(0,cursum)
+    cursum+=thing[i]
+    maxsum = max(cursum,maxsum)
+    
+  return maxsum
+  
+print(onedmaxsum(thing))
+
+#factorial
+def factorial(n):
+  if(n==1):
+    return 1
+  else:
+    return n*factorial(n-1)
+  
+print(factorial(10))
+
+#fibofast
+thing = []
+for i in range(500):
+  thing.append(0)
+  
+def fibo(n):
+  if(n == 0 or n == 1):
+    thing[n] = n
+    return n
+  elif(thing[n]>0):
+    return thing[n]
+  else:
+    thing[n] = fibo(n-1) + fibo(n-2)
+    return thing[n]
+
+print(fibo(50))
+
+#fibofast2
+thing = []
+for i in range(500):
+  thing.append(0)
+  
+def fibo(n):
+  for i in range(n+1):
+    if(i==0 or i==1):
+      thing[i] = i
+    else:
+      thing[i] = thing[i-1] + thing[i-2]
+  return thing[n]
+  
+print(fibo(50))
+
+#fiboslow
+def fibo(n):
+  if(n == 0):
+    return 0
+  if(n==1):
+    return 1
+  else:
+    return fibo(n-1) + fibo(n-2)
+  
+print(fibo(7))
+
+#knapsackfast
+value = [5,30,65,60,25]
+weight = [10,60,80,50,40]
+w = 120
+n = 5
+
+K = [[0 for x in range(w+1)] for y in range(n+1)] 
+
+
+"""w is the current capacity of the knapsack"""
+
+def knapSack(W, wt, val, n):
+   for i in range(n+1):
+       for w in range(W+1):
+           if (i==0 or w==0):
+               K[i][w] = 0;
+           elif (wt[i-1] <= w):
+                 K[i][w] = max(val[i-1] + K[i-1][w-wt[i-1]],  K[i-1][w]);
+           else:
+                 K[i][w] = K[i-1][w];
+       
+   return K[n][W];
+
+print(knapSack(w,weight,value,n))
+
+#knapsackslow
+value = [5,30,65,60,25]
+weight = [10,60,80,50,40]
+w = 120
+n = 5
+
+def knapSack( W, wt, val, n):
+   if (n == 0 or W == 0):
+       return 0;
+   if(wt[n-1] > W): 
+    return knapSack(W, wt, val, n-1)
+   else: 
+    return max( val[n-1] + knapSack(W-wt[n-1], wt, val, n-1),
+                    knapSack(W, wt, val, n-1)
+                  )
+
+print(knapSack(w,weight,value,n))

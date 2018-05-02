@@ -1,0 +1,83 @@
+import math
+
+class Memoize:
+    def __init__(self, fn):
+        self.fn = fn
+        self.memo = {}
+
+    def __call__(self, *args):
+        if args not in self.memo:
+            self.memo[args] = self.fn(*args)
+        return self.memo[args]
+
+
+# To run the code, copy contents of the files below this line
+@Memoize
+def change_ways(S):
+    if S == 0:
+        return 1
+        
+    # if X == 0 and S != 0:
+    #     return 0
+        
+    if S < 0:
+        return 0
+        
+    num_ways = 0
+    
+    for l in L:
+        # print(l)
+        if change_ways(S - l) is None:
+            print(S - l)
+        num_ways += change_ways(S - l)
+      
+    # print(" ")
+    return num_ways
+    
+    
+L = [1, 2, 3, 4, 5]
+print(change_ways(5))
+
+
+coinchange.py
+@Memoize
+def coin_change(S, X):
+    """
+        S and X are defined in the slides
+        L is the list of coins I can use
+    """
+    
+    if S == 0:
+        return 0
+        
+    if X == 0 and S != 0:
+        return math.inf
+        
+    if S < 0:
+        return math.inf
+        
+    return min(coin_change(S - L[X - 1], X) + 1, coin_change(S, X-1))
+    
+
+L = [15, 10, 7, 1]
+print(coin_change(17, len(L)))
+   
+   
+coinchange_ways.py
+
+@Memoize
+def change_ways(S, X):
+    if S == 0:
+        return 1
+        
+    if X == 0 and S != 0:
+        return 0
+        
+    if S < 0:
+        return 0
+        
+    return change_ways(S - L[X-1], X) + change_ways(S, X-1)
+    
+    
+L = [1, 2, 3, 4, 5]
+print(change_ways(10, len(l)))

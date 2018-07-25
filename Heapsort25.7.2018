@@ -35,3 +35,72 @@ def heap_sort(array):
 
 some_heap = [5, 3, 1, 7, 9, 4, 10, 3]
 print(heap_sort(some_heap))
+
+
+
+
+
+
+PRIORITY QUEUE CODE
+class priority_queue:
+  def __init__(self):
+    self.heap = []
+    self.size = 0
+
+  def max_heapify(self, i):
+    #Note: heap is actually an array/list
+    heap = self.heap
+    last_index = self.size - 1
+    #Index of children
+    left_index = 2 * i + 1
+    right_index = 2 * i + 2
+    #Index of smallest between root and its children
+    largest_index = i
+    #Check if left child exists
+    if left_index <= last_index and heap[left_index][0] > heap[largest_index][0]:
+      largest_index = left_index
+    #Check if right child exists
+    if right_index <= last_index and heap[right_index][0] > heap[largest_index][0]:
+      largest_index = right_index
+    if not largest_index == i:
+      #Exchange the values (using tuples in this case)
+      (heap[i], heap[largest_index]) = (heap[largest_index], heap[i])
+      self.heap = heap
+      self.max_heapify(largest_index)
+
+  def enqueue(self, task, x):
+    self.heap.append([x, task])
+    self.size += 1
+    self.bubble_up(self.size - 1)
+  
+  def pop(self):
+    top = self.heap[0]
+    self.bubble_down()
+    self.heap = self.heap[:self.size - 1]
+    self.size -= 1
+    return top
+  
+  def bubble_up(self, x):
+    if x == 0:
+      return
+    parent_index = (x - 1) // 2
+    if self.heap[parent_index] < self.heap[x]:
+      (self.heap[parent_index], self.heap[x]) = (self.heap[x], self.heap[parent_index])
+      self.bubble_up(parent_index)
+  
+  def bubble_down(self):
+    self.heap[0] = self.heap[self.size - 1]
+    self.max_heapify(0)
+
+
+queue = priority_queue()
+
+queue.enqueue("Play games", 2)
+queue.enqueue("Play sports", 3)
+print(queue.pop())
+queue.enqueue("Go for CSC", 5)
+queue.enqueue("Do homework", 1)
+print(queue.pop())
+queue.enqueue("Sleep", 6)
+queue.enqueue("Go out with friends", 4)
+print(queue.pop())

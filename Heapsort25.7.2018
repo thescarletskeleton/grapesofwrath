@@ -1,0 +1,37 @@
+def max_heapify(heap, size, i):
+  #Note: heap is actually an array/list
+  last_index = size - 1
+  #Index of children
+  left_index = 2 * i + 1
+  right_index = 2 * i + 2
+  #Index of smallest between root and its children
+  largest_index = i
+  #Check if left child exists
+  if left_index <= last_index and heap[left_index] > heap[largest_index]:
+    largest_index = left_index
+  #Check if right child exists
+  if right_index <= last_index and heap[right_index] > heap[largest_index]:
+    largest_index = right_index
+  if not largest_index == i:
+    #Exchange the values (using tuples in this case)
+    (heap[i], heap[largest_index]) = (heap[largest_index], heap[i])
+    max_heapify(heap, size, largest_index)
+  return heap
+
+def build_max_heap(array):
+  size = len(array)
+  for i in range(size // 2 - 1, -1, -1):
+    array = max_heapify(array, size, i)
+  return array
+
+def heap_sort(array):
+  heap = build_max_heap(array)
+  heap_size = len(heap)
+  for i in range(heap_size - 1, 0, -1):
+    (heap[i], heap[0]) = (heap[0], heap[i])
+    heap_size -= 1
+    array = max_heapify(heap, heap_size, 0)
+  return array
+
+some_heap = [5, 3, 1, 7, 9, 4, 10, 3]
+print(heap_sort(some_heap))
